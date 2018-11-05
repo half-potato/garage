@@ -325,9 +325,7 @@ def run_experiment(method_call=None,
                                                exp_count)
         if task.get("log_dir", None) is None:
             task["log_dir"] = config.LOG_DIR + "/local/" + \
-                              exp_prefix.replace("_", "-") + \
-                              "/" + \
-                              task["exp_name"]
+            exp_prefix.replace("_", "-") + "/" + task["exp_name"]  # noqa: E122
         if task.get("variant", None) is not None:
             variant = task.pop("variant")
             if "exp_name" not in variant:
@@ -830,14 +828,14 @@ def launch_ec2(params_list,
                             sleep 5
                         fi
                     done & echo log sync initiated
-                """.format(  # noqa: E501
+                """.format(  # noqa: E501, W605
                     log_dir=log_dir,
                     remote_log_dir=remote_log_dir))
         if use_gpu:
             sio.write("""
                 for i in {1..800}; do su -c "nvidia-modprobe -u -c=0" ubuntu && break || sleep 3; done
                 systemctl start nvidia-docker
-            """)  # noqa: E501
+            """)  # noqa: E501, W605
         sio.write("""
             {command}
         """.format(
@@ -988,7 +986,7 @@ def s3_sync_code(config, dry=False, added_project_directories=[]):
         try:
             current_commit = subprocess.check_output(
                 ["git", "rev-parse", "HEAD"]).strip().decode("utf-8")
-        except subprocess.CalledProcessError as _:
+        except subprocess.CalledProcessError:
             print("Warning: failed to execute git commands")
             current_commit = None
 
@@ -1038,7 +1036,7 @@ def s3_sync_code(config, dry=False, added_project_directories=[]):
                 ["git", "rev-parse", "HEAD"]).strip().decode("utf-8")
             clean_state = not subprocess.check_output(
                 ["git", "status", "--porcelain"])
-        except subprocess.CalledProcessError as _:
+        except subprocess.CalledProcessError:
             print("Warning: failed to execute git commands")
             has_git = False
         dir_hash = base64.b64encode(subprocess.check_output(
@@ -1050,17 +1048,20 @@ def s3_sync_code(config, dry=False, added_project_directories=[]):
         full_path = "%s/%s" % (base, code_path)
         cache_path = "%s/%s" % (base, dir_hash)
         cache_cmds = ["aws", "s3", "cp", "--recursive"] + \
-                     flatten(["--exclude", "%s" % pattern]
-                             for pattern in config.CODE_SYNC_IGNORES) + \
-                     [cache_path, full_path]
+            flatten(
+                ["--exclude", "%s" % pattern]
+                for pattern in config.CODE_SYNC_IGNORES
+                ) + [cache_path, full_path]  # noqa: E123
         cmds = ["aws", "s3", "cp", "--recursive"] + \
-               flatten(["--exclude", "%s" % pattern]
-                       for pattern in config.CODE_SYNC_IGNORES) + \
-               [".", full_path]
+            flatten(
+                ["--exclude", "%s" % pattern]
+                for pattern in config.CODE_SYNC_IGNORES
+                ) + [".", full_path]  # noqa: E123
         caching_cmds = ["aws", "s3", "cp", "--recursive"] + \
-                       flatten(["--exclude", "%s" % pattern]
-                               for pattern in config.CODE_SYNC_IGNORES) + \
-                       [full_path, cache_path]
+            flatten(
+                ["--exclude", "%s" % pattern]
+                for pattern in config.CODE_SYNC_IGNORES
+                ) + [full_path, cache_path]  # noqa: E123
         mujoco_key_cmd = [
             "aws", "s3", "sync", config.MUJOCO_KEY_PATH,
             "{}/.mujoco/".format(base)
