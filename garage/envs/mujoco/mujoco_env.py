@@ -5,6 +5,7 @@ import warnings
 
 from cached_property import cached_property
 import gym
+import gym.spaces
 import mako.lookup
 import mako.template
 from mujoco_py import functions
@@ -19,7 +20,7 @@ from garage.misc.overrides import overrides
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 MODEL_DIR = osp.abspath(
-    osp.join(osp.dirname(__file__), '../../../vendor/mujoco_models'))
+    osp.join(osp.dirname(__file__), '../../vendor/mujoco_models'))
 
 BIG = 1e6
 

@@ -4,6 +4,8 @@
 
 # garage
 
+The difference is this fork actually installs??????? I don't even know what's going on over there.
+
 garage is a framework for developing and evaluating reinforcement learning algorithms. It includes a wide range of continuous control tasks plus implementations of algorithms.
 
 garage is fully compatible with [OpenAI Gym](https://gym.openai.com/). All garage environments implement gym.Env, so all garage components can also be used with any environment implementing gym.Env.

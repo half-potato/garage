@@ -130,28 +130,28 @@ BASH_RC="${HOME}/.bashrc"
 # Required for OpenAI baselines: libopenmpi-dev, openmpi-bin
 echo "Installing garage dependencies"
 echo "You will probably be asked for your sudo password"
-sudo apt -y -q update
-sudo apt install -y \
-  wget \
-  bzip2 \
-  unzip \
-  git \
-  cmake \
-  xorg-dev \
-  libglew-dev \
-  patchelf \
-  libosmesa6-dev \
-  libpq-dev \
-  ffmpeg \
-  libjpeg-dev \
-  swig \
-  libsdl2-dev \
-  libopenmpi-dev \
-  openmpi-bin
+#sudo apt -y -q update
+#sudo apt install -y \
+  #wget \
+  #bzip2 \
+  #unzip \
+  #git \
+  #cmake \
+  #xorg-dev \
+  #libglew-dev \
+  #patchelf \
+  #libosmesa6-dev \
+  #libpq-dev \
+  #ffmpeg \
+  #libjpeg-dev \
+  #swig \
+  #libsdl2-dev \
+  #libopenmpi-dev \
+  #openmpi-bin
 
-# Build GLFW because the Ubuntu 16.04 version is too old
-# See https://github.com/glfw/glfw/issues/1004
-sudo apt purge -y libglfw*
+## Build GLFW because the Ubuntu 16.04 version is too old
+## See https://github.com/glfw/glfw/issues/1004
+#sudo apt purge -y libglfw*
 GLFW_DIR="$(mktemp -d)/glfw"
 git clone https://github.com/glfw/glfw.git "${GLFW_DIR}"
 cd "${GLFW_DIR}"

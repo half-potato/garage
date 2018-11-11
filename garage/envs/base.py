@@ -8,7 +8,21 @@ import gym
 
 from garage.core import Parameterized
 from garage.core import Serializable
-from tests.quirks import KNOWN_GYM_NOT_CLOSE_VIEWER
+# from tests.quirks import KNOWN_GYM_NOT_CLOSE_VIEWER
+KNOWN_GYM_RENDER_NOT_IMPLEMENTED = [
+    # Please keep alphabetized
+    "Blackjack-v0",
+    "GuessingGame-v0",
+    "HotterColder-v0",
+    "NChain-v0",
+    "Roulette-v0",
+]
+
+KNOWN_GYM_NOT_CLOSE_VIEWER = [
+    # Please keep alphabetized
+    "gym.envs.mujoco",
+    "gym.envs.robotics"
+]
 
 
 class GarageEnv(gym.Wrapper, Parameterized, Serializable, metaclass=ABCMeta):
